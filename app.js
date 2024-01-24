@@ -10,7 +10,7 @@ const fs = require("fs");
 
 const app = express();
 
-//app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Define a route
 app.get("/", (req, res) => {
