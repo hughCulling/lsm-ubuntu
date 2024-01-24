@@ -13,8 +13,12 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 
 // Define a route
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + "/public/html/index.html");
+// });
+
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/html/index.html");
+  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
 });
 
 const privateKey = fs.readFileSync(
