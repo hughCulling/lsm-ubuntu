@@ -24,15 +24,15 @@ const app = express();
 // Your existing server setup...
 
 const privateKey = fs.readFileSync(
-  "/etc/letsencrypt/live/your_domain.com/privkey.pem",
+  "/etc/letsencrypt/live/live-stream-music.com/privkey.pem",
   "utf8"
 );
 const certificate = fs.readFileSync(
-  "/etc/letsencrypt/live/your_domain.com/cert.pem",
+  "/etc/letsencrypt/live/live-stream-music.com/fullchain.pem",
   "utf8"
 );
 const ca = fs.readFileSync(
-  "/etc/letsencrypt/live/your_domain.com/chain.pem",
+  "/etc/letsencrypt/live/live-stream-music.com/chain.pem",
   "utf8"
 );
 
