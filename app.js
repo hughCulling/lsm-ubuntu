@@ -1,8 +1,3 @@
-// // Define a route
-// app.get("/", (req, res) => {
-//   res.send("Hello, Express!");
-// });
-
 // // Start the server on port 3000
 // const port = 80;
 // app.listen(port, () => {
@@ -17,10 +12,8 @@ const app = express();
 
 // Define a route
 app.get("/", (req, res) => {
-  res.send("Hello, Express!");
+  res.sendFile(__dirname + "/public/html/index.html");
 });
-
-// Your existing server setup...
 
 const privateKey = fs.readFileSync(
   "/etc/letsencrypt/live/live-stream-music.com/privkey.pem",
