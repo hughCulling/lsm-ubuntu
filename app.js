@@ -10,6 +10,8 @@ const fs = require("fs");
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, "public")));
+
 // Define a route
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/html/index.html");
