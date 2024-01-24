@@ -1,9 +1,3 @@
-// // Import required modules
-// const express = require("express");
-
-// // Create an Express application
-// const app = express();
-
 // // Define a route
 // app.get("/", (req, res) => {
 //   res.send("Hello, Express!");
@@ -20,6 +14,11 @@ const https = require("https");
 const fs = require("fs");
 
 const app = express();
+
+// Define a route
+app.get("/", (req, res) => {
+  res.send("Hello, Express!");
+});
 
 // Your existing server setup...
 
