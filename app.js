@@ -10,11 +10,11 @@ const fs = require("fs");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "public")));
 
 // Define a route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+  res.sendFile(__dirname + "/public/html/index.html");
 });
 
 const privateKey = fs.readFileSync(
