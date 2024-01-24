@@ -13,11 +13,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// Define a route
-// app.get("/", (req, res) => {
-//   res.sendFile("/html/index.html");
-// });
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
 });
