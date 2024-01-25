@@ -118,8 +118,25 @@ app.get("/broadcast.html", (req, res) => {
   }
 });
 
+// app.get("/playback.html", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "html", "playback.html"));
+// });
+
 app.get("/playback.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "playback.html"));
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    res.render(path.join(__dirname, "views", "playback.pug"), {
+      title: "Playback | Live Stream Music",
+      href: `${id}`,
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "playback.pug"), {
+      title: "Playback | Live Stream Music",
+      href: "/sign-in.html",
+    });
+  }
 });
 
 app.get("/sign-up.html", (req, res) => {
