@@ -116,6 +116,9 @@ app.post("/sign-in.html", async function (req, res, next) {
   };
   let result = await signInUser();
   console.log("They signed in.");
+  req.session.user = result;
+  req.session.save();
+  console.log(result);
 
   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
 });
