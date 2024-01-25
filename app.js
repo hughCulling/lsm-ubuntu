@@ -18,6 +18,29 @@ const collection_name = "users";
 const usersCollection = client.db(dbname).collection(collection_name);
 let userAccount = {};
 
+const connectToDatabase = async () => {
+  try {
+    await client.connect();
+    console.log(
+      `Connected to the ${dbname} database 🌍 \nFull connection string: ${uri}`
+    );
+  } catch (err) {
+    console.error(`Error connecting to the database: ${err}`);
+  }
+};
+
+const signUpUser = async () => {
+  try {
+    await connectToDatabase();
+    let result = await usersCollection.insertOne(userAccount);
+    console.log(`Inserted document: ${result.insertedId}`);
+  } catch (err) {
+    console.error(`Error connecting to the database: ${err}`);
+  } finally {
+    await client.close();
+  }
+};
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
