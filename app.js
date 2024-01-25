@@ -13,6 +13,10 @@ const uri = require("./atlas_uri.js");
 
 const app = express();
 const client = new MongoClient(uri);
+const dbname = "live-stream-music";
+const collection_name = "users";
+const usersCollection = client.db(dbname).collection(collection_name);
+let userAccount = {};
 
 app.use(express.static(path.join(__dirname, "public")));
 
