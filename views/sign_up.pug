@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h2 Sign Up
+  table
+    form(method="post") 
+      tr
+        td
+          label(for="name") Name:
+        td
+          input(type="text" id="name" name="name")
+      tr
+        td
+          label(for="email") Email:
+        td
+          input(type="email" id="email" name="email")
+      tr
+        td
+          label(for="password") Password:
+        td
+          input(type="password" id="password" name="password")
+      tr
+        td
+          input(type="submit")    
