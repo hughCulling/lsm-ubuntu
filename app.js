@@ -74,7 +74,9 @@ app.post("/sign-up.html", function (req, res, next) {
     password: `${req.body.password}`,
   };
 
-  signUpUser();
+  console.log(userAccount);
+
+  // signUpUser();
 
   res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
 });
