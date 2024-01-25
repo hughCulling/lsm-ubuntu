@@ -29,6 +29,10 @@ app.get("/sign-up.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
 });
 
+app.get("/sign-in.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
+});
+
 const privateKey = fs.readFileSync(
   "/etc/letsencrypt/live/live-stream-music.com/privkey.pem",
   "utf8"
