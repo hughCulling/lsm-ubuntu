@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 const { MongoClient } = require("mongodb");
 const uri = require("./atlas_uri.js");
+const bodyParser = require("body-parser");
 
 const app = express();
 const client = new MongoClient(uri);
@@ -46,6 +47,7 @@ const signUpUser = async () => {
 };
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
