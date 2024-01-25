@@ -63,6 +63,18 @@ app.get("/sign-in.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
 });
 
+router.post("/sign-up.html", function (req, res, next) {
+  userAccount = {
+    name: `${req.body.name}`,
+    email: `${req.body.email}`,
+    password: `${req.body.password}`,
+  };
+
+  signUpUser();
+
+  res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
+});
+
 const privateKey = fs.readFileSync(
   "/etc/letsencrypt/live/live-stream-music.com/privkey.pem",
   "utf8"
