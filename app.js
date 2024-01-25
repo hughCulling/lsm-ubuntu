@@ -84,7 +84,6 @@ app.get("/", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
-    console.log(id);
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
       href: `${id}`,
@@ -98,8 +97,25 @@ app.get("/", (req, res) => {
   }
 });
 
+// app.get("/broadcast.html", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "html", "broadcast.html"));
+// });
+
 app.get("/broadcast.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "broadcast.html"));
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    res.render(path.join(__dirname, "views", "broadcast.pug"), {
+      title: "Broadcast | Live Stream Music",
+      href: `${id}`,
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "index.pug"), {
+      title: "Broadcast | Live Stream Music",
+      href: "/sign-in.html",
+    });
+  }
 });
 
 app.get("/playback.html", (req, res) => {

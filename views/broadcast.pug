@@ -1,0 +1,14 @@
+extends layout.pug
+
+block append head
+  script(src='https://web-broadcast.live-video.net/1.6.0/amazon-ivs-web-broadcast.js')
+
+block content
+  h2 Broadcast
+  canvas(id='preview')
+  br
+  button(onClick='startBroadcast()') Start broadcast
+  br
+  br
+  button(onClick='stopBroadcast()') Stop broadcast
+  script(src='/javascripts/broadcast.js')
