@@ -12,6 +12,7 @@ const { MongoClient } = require("mongodb");
 const uri = require("./atlas_uri.js");
 
 const app = express();
+const client = new MongoClient(uri);
 
 app.use(express.static(path.join(__dirname, "public")));
 
