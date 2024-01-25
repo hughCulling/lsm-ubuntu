@@ -191,9 +191,7 @@ app.post("/sign-up.html", function (req, res, next) {
     email: `${req.body.email}`,
     password: `${req.body.password}`,
   };
-
   signUpUser();
-
   // res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
   if (req.session.user) {
     console.log("They are signed in.");
@@ -222,7 +220,21 @@ app.post("/sign-in.html", async function (req, res, next) {
   req.session.save();
   console.log(result);
 
-  res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
+  // res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    res.render(path.join(__dirname, "views", "sign_in.pug"), {
+      title: "Sign In | Live Stream Music",
+      href: `${id}`,
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "sign_in.pug"), {
+      title: "Sign In | Live Stream Music",
+      href: "/sign-in.html",
+    });
+  }
 });
 
 const privateKey = fs.readFileSync(
