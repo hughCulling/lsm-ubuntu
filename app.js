@@ -22,6 +22,7 @@ let userAccount = {
   email: "Culling",
   password: "pw123",
 };
+let documentToFind = { email: "lornica@lsm.com" };
 
 const connectToDatabase = async () => {
   try {
@@ -39,6 +40,20 @@ const signUpUser = async () => {
     await connectToDatabase();
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
+  } catch (err) {
+    console.error(`Error connecting to the database: ${err}`);
+  } finally {
+    await client.close();
+  }
+};
+
+const signInUser = async () => {
+  try {
+    await connectToDatabase();
+    let result = await usersCollection.findOne(documentToFind);
+    console.log(`Found one document`);
+    console.log(result);
+    return result;
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
@@ -79,6 +94,17 @@ app.post("/sign-up.html", function (req, res, next) {
   signUpUser();
 
   res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
+});
+
+app.post("/sign-in.html", async function (req, res, next) {
+  documentToFind = {
+    email: `${req.body.email}`,
+    password: `${req.body.password}`,
+  };
+  let result = await signInUser();
+  console.log("They signed in.");
+
+  res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
 });
 
 const privateKey = fs.readFileSync(
