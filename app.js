@@ -111,7 +111,7 @@ app.get("/broadcast.html", (req, res) => {
     });
   } else {
     console.log("They are not signed in.");
-    res.render(path.join(__dirname, "views", "index.pug"), {
+    res.render(path.join(__dirname, "views", "broadcast.pug"), {
       title: "Broadcast | Live Stream Music",
       href: "/sign-in.html",
     });
