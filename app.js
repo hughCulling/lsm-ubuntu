@@ -81,9 +81,20 @@ app.use(
 // });
 
 app.get("/", (req, res) => {
-  res.render(path.join(__dirname, "views", "index.pug"), {
-    title: "Live Stream Music",
-  });
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    res.render(path.join(__dirname, "views", "index.pug"), {
+      title: "Live Stream Music",
+      href: `${id}`,
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "index.pug"), {
+      title: "Live Stream Music",
+      href: "/sign-in.html",
+    });
+  }
 });
 
 app.get("/broadcast.html", (req, res) => {
