@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    block head
+      title= title
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      link(rel='icon', href='/images/favicon.ico')
+  body
+    h1 Live Stream Music
+    hr
+    a(href='/') Index
+    span  | 
+    a(href='/broadcast.html') Broadcast
+    span  | 
+    a(href='/playback.html') Playback
+    span  | 
+    a(href='/sign-up.html') Sign Up
+    span  | 
+    a(href='/sign-in.html') Sign In
+    span  | 
+    a(href= '/user.html') User
+    hr
+    block content
+    hr 
+    footer
+      p Author: Hugh Wilfred Culling
+      p
+        a(href="mailto:hughculling@icloud.com") hughculling@icloud.com 

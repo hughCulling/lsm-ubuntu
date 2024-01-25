@@ -76,8 +76,14 @@ app.use(
   })
 );
 
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+// });
+
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+  res.render(path.join(__dirname, "views", "index.pug"), {
+    title: "Live Stream Music",
+  });
 });
 
 app.get("/broadcast.html", (req, res) => {
