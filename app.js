@@ -11,6 +11,7 @@ const path = require("path");
 const { MongoClient } = require("mongodb");
 const uri = require("./atlas_uri.js");
 const bodyParser = require("body-parser");
+const session = require("express-session");
 
 const app = express();
 const client = new MongoClient(uri);
@@ -63,6 +64,14 @@ const signInUser = async () => {
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: "secret",
+    cookie: { secure: false },
+  })
+);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
@@ -82,6 +91,10 @@ app.get("/sign-up.html", (req, res) => {
 
 app.get("/sign-in.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
+});
+
+app.get("/user.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "user.html"));
 });
 
 app.post("/sign-up.html", function (req, res, next) {
