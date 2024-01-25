@@ -160,8 +160,25 @@ app.get("/sign-up.html", (req, res) => {
   }
 });
 
+// app.get("/sign-in.html", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
+// });
+
 app.get("/sign-in.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    res.render(path.join(__dirname, "views", "sign_in.pug"), {
+      title: "Sign In | Live Stream Music",
+      href: `${id}`,
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "sign_in.pug"), {
+      title: "Sign In | Live Stream Music",
+      href: "/sign-in.html",
+    });
+  }
 });
 
 app.get("/:id", (req, res) => {
