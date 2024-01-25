@@ -9,37 +9,8 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const { MongoClient } = require("mongodb");
-const uri = require("/atlas_uri.js");
 
 const app = express();
-const client = new MongoClient(uri);
-const dbname = "live-stream-music";
-const collection_name = "users";
-const usersCollection = client.db(dbname).collection(collection_name);
-let userAccount = {};
-
-const connectToDatabase = async () => {
-  try {
-    await client.connect();
-    console.log(
-      `Connected to the ${dbname} database 🌍 \nFull connection string: ${uri}`
-    );
-  } catch (err) {
-    console.error(`Error connecting to the database: ${err}`);
-  }
-};
-
-const signUpUser = async () => {
-  try {
-    await connectToDatabase();
-    let result = await usersCollection.insertOne(userAccount);
-    console.log(`Inserted document: ${result.insertedId}`);
-  } catch (err) {
-    console.error(`Error connecting to the database: ${err}`);
-  } finally {
-    await client.close();
-  }
-};
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -61,18 +32,6 @@ app.get("/sign-up.html", (req, res) => {
 
 app.get("/sign-in.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
-});
-
-app.post("/sign-up.html", function (req, res, next) {
-  userAccount = {
-    name: `${req.body.name}`,
-    email: `${req.body.email}`,
-    password: `${req.body.password}`,
-  };
-
-  signUpUser();
-
-  res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
 });
 
 const privateKey = fs.readFileSync(
