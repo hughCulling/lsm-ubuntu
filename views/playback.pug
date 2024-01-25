@@ -3,6 +3,9 @@ extends layout.pug
 block append head
   script(src='https://player.live-video.net/1.23.0/amazon-ivs-player.min.js')
 
+block status 
+  span(class="status")= status
+
 block content
   h2 Playback
   video(id='video-player' playsinline)

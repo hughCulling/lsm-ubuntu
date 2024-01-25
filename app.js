@@ -87,6 +87,7 @@ app.get("/", (req, res) => {
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
@@ -108,6 +109,7 @@ app.get("/broadcast.html", (req, res) => {
     res.render(path.join(__dirname, "views", "broadcast.pug"), {
       title: "Broadcast | Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
@@ -129,6 +131,7 @@ app.get("/playback.html", (req, res) => {
     res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "Playback | Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
@@ -150,6 +153,7 @@ app.get("/sign-up.html", (req, res) => {
     res.render(path.join(__dirname, "views", "sign_up.pug"), {
       title: "Sign Up | Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
@@ -171,6 +175,7 @@ app.get("/sign-in.html", (req, res) => {
     res.render(path.join(__dirname, "views", "sign_in.pug"), {
       title: "Sign In | Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
@@ -199,6 +204,7 @@ app.post("/sign-up.html", function (req, res, next) {
     res.render(path.join(__dirname, "views", "sign_up.pug"), {
       title: "Sign Up | Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
@@ -227,6 +233,7 @@ app.post("/sign-in.html", async function (req, res, next) {
     res.render(path.join(__dirname, "views", "sign_in.pug"), {
       title: "Sign In | Live Stream Music",
       href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
