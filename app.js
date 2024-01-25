@@ -16,7 +16,11 @@ const client = new MongoClient(uri);
 const dbname = "live-stream-music";
 const collection_name = "users";
 const usersCollection = client.db(dbname).collection(collection_name);
-let userAccount = {};
+let userAccount = {
+  name: "Hugh",
+  email: "Culling",
+  password: "pw123",
+};
 
 const connectToDatabase = async () => {
   try {
