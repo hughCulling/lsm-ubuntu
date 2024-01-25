@@ -4,6 +4,7 @@
     <title>Broadcast | Live Stream Music</title>
     <link rel="stylesheet" , href="../stylesheets/style.css" />
     <link rel="icon" , href="../images/favicon.ico" />
+    <script src="https://web-broadcast.live-video.net/1.6.0/amazon-ivs-web-broadcast.js"></script>
   </head>
 
   <body>
@@ -24,6 +25,14 @@
     <hr />
 
     <h2>Broadcast</h2>
+
+    <canvas id="preview"></canvas>
+    <br />
+    <button onclick="startBroadcast()">Start broadcast</button>
+    <br />
+    <br />
+    <button onclick="stopBroadcast()">Stop broadcast</button>
+    <script src="../javascripts/broadcast.js"></script>
 
     <hr />
 
