@@ -84,6 +84,7 @@ app.get("/", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
+    console.log(id);
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
       href: `${id}`,
