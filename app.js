@@ -191,8 +191,27 @@ app.get("/sign-in.html", (req, res) => {
   }
 });
 
+// app.get("/:id", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "html", "user.html"));
+// });
+
 app.get("/:id", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "user.html"));
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    res.render(path.join(__dirname, "views", "user.pug"), {
+      title: "User | Live Stream Music",
+      href: `${id}`,
+      status: `Signed in as: ${req.session.user.name}`,
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "user.pug"), {
+      title: "User | Live Stream Music",
+      href: "/sign-in.html",
+      status: "User: not signed in",
+    });
+  }
 });
 
 app.post("/sign-up.html", function (req, res, next) {
@@ -202,6 +221,7 @@ app.post("/sign-up.html", function (req, res, next) {
     password: `${req.body.password}`,
   };
   signUpUser();
+
   // res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
   if (req.session.user) {
     console.log("They are signed in.");
