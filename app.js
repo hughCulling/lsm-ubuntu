@@ -76,9 +76,7 @@ app.post("/sign-up.html", function (req, res, next) {
     password: `${req.body.password}`,
   };
 
-  console.log(userAccount);
-
-  // signUpUser();
+  signUpUser();
 
   res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
 });
@@ -107,5 +105,5 @@ const httpsServer = https.createServer(credentials, app);
 const PORT = 443;
 
 httpsServer.listen(PORT, () => {
-  console.log(`Server running on https://your_domain.com:${PORT}`);
+  console.log(`Server running on https://live-stream-music.com:${PORT}`);
 });
