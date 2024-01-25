@@ -130,7 +130,7 @@ app.get("/sign-in.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
 });
 
-app.get("/user.html", (req, res) => {
+app.get("/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "user.html"));
 });
 
