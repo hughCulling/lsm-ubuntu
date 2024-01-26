@@ -18,7 +18,7 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 import { MongoClient } from "mongodb";
-import uri from "./atlas_uri"; //"./atlas_uri.js";
+import uri from "./atlas_uri.js";
 import bodyParser from "body-parser";
 import session from "express-session";
 import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
