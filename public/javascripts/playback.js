@@ -6,13 +6,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Use the streamKey variable as needed
   console.log(playbackUrl);
+
+  if (IVSPlayer.isPlayerSupported) {
+    const player = IVSPlayer.create();
+    player.attachHTMLVideoElement(document.getElementById("video-player"));
+    player.load(`${playbackUrl}`);
+    player.play();
+  }
 });
 
 let playbackUrl = "";
 
-if (IVSPlayer.isPlayerSupported) {
-  const player = IVSPlayer.create();
-  player.attachHTMLVideoElement(document.getElementById("video-player"));
-  player.load(`${playbackUrl}`);
-  player.play();
-}
+// if (IVSPlayer.isPlayerSupported) {
+//   const player = IVSPlayer.create();
+//   player.attachHTMLVideoElement(document.getElementById("video-player"));
+//   player.load(`${playbackUrl}`);
+//   player.play();
+// }
