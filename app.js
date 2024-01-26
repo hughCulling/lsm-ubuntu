@@ -271,6 +271,9 @@ app.get("/sign-in.html", (req, res) => {
 // });
 
 app.get("/:id", (req, res) => {
+  let currentUrl = req.url;
+  console.log("current URL = " + currentUrl);
+
   if (req.session.user) {
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
