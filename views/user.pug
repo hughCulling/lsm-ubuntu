@@ -7,8 +7,7 @@ block status
   span(class="status")= status
   
 block content
-  - const streamKey = #{streamKey}
-  h2 User
+  h2= streamKey
   canvas(id='preview')
   br
   button(onClick='startBroadcast()') Start broadcast
