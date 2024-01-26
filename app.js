@@ -23,6 +23,7 @@ import uri from "./atlas_uri.js";
 import bodyParser from "body-parser";
 import session from "express-session";
 import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
+import { fileURLToPath } from "url";
 
 const app = express();
 const client = new MongoClient(uri);
@@ -35,6 +36,7 @@ let userAccount = {
   password: "pw123",
 };
 let documentToFind = { email: "lornica@lsm.com" };
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 console.log(__dirname);
 
