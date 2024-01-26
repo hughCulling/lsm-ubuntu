@@ -72,24 +72,6 @@ const signUpUser = async () => {
     await connectToDatabase();
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
-    // input = {
-    //   // CreateChannelRequest
-    //   name: `{$result.insertedId}`,
-    //   latencyMode: "NORMAL",
-    //   type: "BASIC",
-    //   authorized: false,
-    //   recordingConfigurationArn: "",
-    //   tags: {
-    //     // Tags
-    //   },
-    //   insecureIngest: false,
-    //   preset: "",
-    // };
-    // console.log(input);
-    // const response = await ivs_client.send(command);
-  } catch (err) {
-    console.error(`Error connecting to the database: ${err}`);
-  } finally {
     input = {
       // CreateChannelRequest
       name: `${result.insertedId}`,
@@ -105,6 +87,24 @@ const signUpUser = async () => {
     };
     console.log(input);
     const response = await ivs_client.send(command);
+  } catch (err) {
+    console.error(`Error connecting to the database: ${err}`);
+  } finally {
+    // input = {
+    //   // CreateChannelRequest
+    //   name: `${result.insertedId}`,
+    //   latencyMode: "NORMAL",
+    //   type: "BASIC",
+    //   authorized: false,
+    //   recordingConfigurationArn: "",
+    //   tags: {
+    //     // Tags
+    //   },
+    //   insecureIngest: false,
+    //   preset: "",
+    // };
+    // console.log(input);
+    // const response = await ivs_client.send(command);
     await client.close();
   }
 };
