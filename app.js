@@ -54,7 +54,7 @@ const input = {
   preset: "",
 };
 const command = new CreateChannelCommand(input);
-const response = await ivs_client.send(command);
+// const response = await ivs_client.send(command);
 
 const connectToDatabase = async () => {
   try {
