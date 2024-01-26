@@ -53,6 +53,8 @@ const input = {
   insecureIngest: false,
   preset: "",
 };
+const command = new CreateChannelCommand(input);
+const response = await client.send(command);
 
 const connectToDatabase = async () => {
   try {
