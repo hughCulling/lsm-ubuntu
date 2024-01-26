@@ -275,7 +275,7 @@ app.get("/sign-in.html", (req, res) => {
 //   res.sendFile(path.join(__dirname, "public", "html", "user.html"));
 // });
 
-app.get("/:id", (req, res) => {
+app.get("/:id", async (req, res) => {
   let currentUrl = req.url;
   console.log("current URL = " + currentUrl);
   let pageid = currentUrl.slice(1, 25);
@@ -297,6 +297,11 @@ app.get("/:id", (req, res) => {
   } else {
     console.log("They are not signed in.");
     console.log("They are a viewer.");
+    documentToFind = {
+      _id: `${pageid}`,
+    };
+    let result = await signInUser();
+    console.log(result);
     res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "User | Live Stream Music",
       href: "/sign-in.html",
