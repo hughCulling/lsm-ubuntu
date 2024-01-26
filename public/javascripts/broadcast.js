@@ -43,24 +43,21 @@ document.addEventListener("DOMContentLoaded", function () {
     client.addVideoInputDevice(window.cameraStream, "camera1", { index: 0 }); // only 'index' is required for the position parameter
     client.addAudioInputDevice(window.microphoneStream, "mic1");
   }
-  function startBroadcast() {
-    client
-      .startBroadcast(streamKey)
-      .then((result) => {
-        console.log("I am successfully broadcasting!");
-      })
-      .catch((error) => {
-        console.error(
-          "Something drastically failed while broadcasting!",
-          error
-        );
-      });
-  }
-  function stopBroadcast() {
-    client.stopBroadcast();
-  }
-  client.attachPreview(previewEl);
-  retrieveMediaStream();
-
-  // import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 });
+function startBroadcast() {
+  client
+    .startBroadcast(streamKey)
+    .then((result) => {
+      console.log("I am successfully broadcasting!");
+    })
+    .catch((error) => {
+      console.error("Something drastically failed while broadcasting!", error);
+    });
+}
+function stopBroadcast() {
+  client.stopBroadcast();
+}
+client.attachPreview(previewEl);
+retrieveMediaStream();
+
+// import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
