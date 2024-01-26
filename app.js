@@ -85,6 +85,7 @@ const signUpUser = async () => {
       insecureIngest: false,
       preset: "",
     };
+    console.log(input);
     const response = await ivs_client.send(command);
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
