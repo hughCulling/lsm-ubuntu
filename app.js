@@ -12,7 +12,7 @@ const { MongoClient } = require("mongodb");
 const uri = require("./atlas_uri.js");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
+// import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 
 const app = express();
 const client = new MongoClient(uri);
