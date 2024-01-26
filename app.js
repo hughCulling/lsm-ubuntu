@@ -40,7 +40,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const ivs_client = new IvsClient({ region: "eu-west-1" });
-const input = {
+let input = {
   // CreateChannelRequest
   name: "lsm_channel",
   latencyMode: "NORMAL",
