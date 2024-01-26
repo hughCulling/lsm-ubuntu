@@ -91,6 +91,15 @@ const signUpUser = async () => {
     console.log(response.channel.ingestEndpoint);
     console.log(response.channel.playbackUrl);
     console.log(response.streamKey.value);
+    const documentToUpdate = { _id: `${result.insertedId}` };
+    const update = { streamKey: `${response.streamKey.value}` };
+    let updateResult = await usersCollection.updateOne(
+      documentToUpdate,
+      update
+    );
+    updateResult.modifiedCount > 0
+      ? console.log(`Updated ${updateResult.modifiedCount} documents`)
+      : console.log("No documents updated");
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {

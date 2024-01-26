@@ -44,3 +44,5 @@ function stopBroadcast() {
 }
 client.attachPreview(previewEl);
 retrieveMediaStream();
+
+// import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
