@@ -72,6 +72,20 @@ const signUpUser = async () => {
     await connectToDatabase();
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
+    input = {
+      // CreateChannelRequest
+      name: `{$result.insertedId}`,
+      latencyMode: "NORMAL",
+      type: "BASIC",
+      authorized: false,
+      recordingConfigurationArn: "",
+      tags: {
+        // Tags
+      },
+      insecureIngest: false,
+      preset: "",
+    };
+    const response = await ivs_client.send(command);
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
