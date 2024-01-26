@@ -298,7 +298,7 @@ app.get("/:id", async (req, res) => {
     console.log("They are not signed in.");
     console.log("They are a viewer.");
     documentToFind = {
-      _id: `${pageid}`,
+      _id: new ObjectId(pageid),
     };
     let result = await signInUser();
     console.log(result);
