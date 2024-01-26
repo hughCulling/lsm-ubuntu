@@ -1,5 +1,5 @@
 // Access the streamKey value from the data attribute
-const streamKey = document.getElementById("streamKeyScript").dataset.streamKey;
+//const streamKey = document.getElementById("streamKeyScript").dataset.streamKey;
 
 // Use the streamKey variable as needed
 console.log(streamKey);

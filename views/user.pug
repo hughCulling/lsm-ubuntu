@@ -7,7 +7,7 @@ block status
   span(class="status")= status
   
 block content
-  script(id="streamKeyScript", data-streamKey="#{streamKey}")
+  - const streamKey = streamKey
   h2 User
   canvas(id='preview')
   br
