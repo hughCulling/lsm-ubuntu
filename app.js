@@ -92,7 +92,12 @@ const signUpUser = async () => {
     console.log(response.channel.playbackUrl);
     console.log(response.streamKey.value);
     const documentToUpdate = { _id: new ObjectId(result.insertedId) };
-    const update = { $set: { streamKey: `${response.streamKey.value}` } };
+    const update = {
+      $set: {
+        streamKey: `${response.streamKey.value}`,
+        playbackUrl: `${response.channel.playbackUrl}`,
+      },
+    };
     let updateResult = await usersCollection.updateOne(
       documentToUpdate,
       update
@@ -278,6 +283,9 @@ app.get("/:id", (req, res) => {
   console.log(pageid == req.session.user._id);
 
   if (req.session.user) {
+    if (pageid == req.session.user._id) {
+      console.log("They are the broadcaster");
+    }
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "user.pug"), {
@@ -288,7 +296,8 @@ app.get("/:id", (req, res) => {
     });
   } else {
     console.log("They are not signed in.");
-    res.render(path.join(__dirname, "views", "user.pug"), {
+    console.log("They are a viewer.");
+    res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "User | Live Stream Music",
       href: "/sign-in.html",
       status: "User: not signed in",
