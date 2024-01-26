@@ -17,6 +17,7 @@ import express from "express";
 import https from "https";
 import fs from "fs";
 import path from "path";
+import { dirname } from "path";
 import { MongoClient } from "mongodb";
 import uri from "./atlas_uri.js";
 import bodyParser from "body-parser";
@@ -34,6 +35,8 @@ let userAccount = {
   password: "pw123",
 };
 let documentToFind = { email: "lornica@lsm.com" };
+const __dirname = dirname(__filename);
+console.log(__dirname);
 
 const connectToDatabase = async () => {
   try {
