@@ -306,6 +306,7 @@ app.get("/:id", async (req, res) => {
       title: "User | Live Stream Music",
       href: "/sign-in.html",
       status: "User: not signed in",
+      playbackUrl: `${result.playbackUrl}`,
     });
   }
 });
