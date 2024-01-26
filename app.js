@@ -91,7 +91,7 @@ const signUpUser = async () => {
     console.log(response.channel.ingestEndpoint);
     console.log(response.channel.playbackUrl);
     console.log(response.streamKey.value);
-    const documentToUpdate = { _id: `${result.insertedId}` };
+    const documentToUpdate = { _id: new ObjectId(result.insertedId) };
     const update = { $set: { streamKey: `${response.streamKey.value}` } };
     let updateResult = await usersCollection.updateOne(
       documentToUpdate,
