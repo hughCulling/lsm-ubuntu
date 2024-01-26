@@ -20,6 +20,7 @@ const client = IVSBroadcastClient.create({
 const previewEl = document.getElementById("preview");
 const streamConfig = IVSBroadcastClient.BASIC_LANDSCAPE;
 // const streamKey = "sk_eu-west-1_bXiIXRjTFqc6_pDJz8LEfLrjEE9zQAlnF0GBgCK5916";
+let streamKey = "";
 
 async function retrieveMediaStream() {
   const devices = await navigator.mediaDevices.enumerateDevices();
