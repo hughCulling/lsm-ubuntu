@@ -273,6 +273,9 @@ app.get("/sign-in.html", (req, res) => {
 app.get("/:id", (req, res) => {
   let currentUrl = req.url;
   console.log("current URL = " + currentUrl);
+  let pageid = currentUrl.slice(1, 25);
+  console.log("page id = " + pageid);
+  console.log(pageid == req.session.user._id);
 
   if (req.session.user) {
     console.log("They are signed in.");
