@@ -1,3 +1,4 @@
+console.log(streamKey);
 const client = IVSBroadcastClient.create({
   streamConfig: IVSBroadcastClient.BASIC_LANDSCAPE,
   ingestEndpoint:

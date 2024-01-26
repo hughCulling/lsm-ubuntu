@@ -278,6 +278,7 @@ app.get("/:id", (req, res) => {
       title: "User | Live Stream Music",
       href: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
+      streamKey: `${req.session.user.streamKey}`,
     });
   } else {
     console.log("They are not signed in.");
