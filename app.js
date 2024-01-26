@@ -157,6 +157,7 @@ app.use(
 app.get("/", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
+    console.log(req.session.user);
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
