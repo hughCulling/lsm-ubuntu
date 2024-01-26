@@ -5,7 +5,7 @@
 // Wait for the DOM content to load before accessing the script tag
 document.addEventListener("DOMContentLoaded", function () {
   // Access the streamKey value from the data attribute
-  const streamKey = document
+  streamKey = document
     .querySelector("script[data-stream-key]")
     .getAttribute("data-stream-key");
 
