@@ -38,7 +38,8 @@ let userAccount = {
 let documentToFind = { email: "lornica@lsm.com" };
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.log(__dirname);
+
+const ivs_client = new IvsClient({ region: "eu-west-1" });
 
 const connectToDatabase = async () => {
   try {
