@@ -280,7 +280,7 @@ app.get("/:id", async (req, res) => {
   console.log("current URL = " + currentUrl);
   let pageid = currentUrl.slice(1, 25);
   console.log("page id = " + pageid);
-  console.log(pageid == req.session.user._id);
+  // console.log(pageid == req.session.user._id);
 
   if (req.session.user) {
     if (pageid == req.session.user._id) {
