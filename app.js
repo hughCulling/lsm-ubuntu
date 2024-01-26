@@ -53,7 +53,7 @@ let input = {
   insecureIngest: false,
   preset: "",
 };
-const command = new CreateChannelCommand(input);
+// const command = new CreateChannelCommand(input);
 // const response = await ivs_client.send(command);
 
 const connectToDatabase = async () => {
@@ -86,6 +86,7 @@ const signUpUser = async () => {
       preset: "",
     };
     console.log(input);
+    const command = new CreateChannelCommand(input);
     const response = await ivs_client.send(command);
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
