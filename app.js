@@ -88,6 +88,7 @@ const signUpUser = async () => {
     console.log(input);
     const command = new CreateChannelCommand(input);
     const response = await ivs_client.send(command);
+    console.log(response);
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
