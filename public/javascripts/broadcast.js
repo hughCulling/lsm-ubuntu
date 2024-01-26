@@ -1,4 +1,9 @@
+// Access the streamKey value from the data attribute
+const streamKey = document.getElementById("streamKeyScript").dataset.streamKey;
+
+// Use the streamKey variable as needed
 console.log(streamKey);
+
 const client = IVSBroadcastClient.create({
   streamConfig: IVSBroadcastClient.BASIC_LANDSCAPE,
   ingestEndpoint:
@@ -6,7 +11,7 @@ const client = IVSBroadcastClient.create({
 });
 const previewEl = document.getElementById("preview");
 const streamConfig = IVSBroadcastClient.BASIC_LANDSCAPE;
-const streamKey = "sk_eu-west-1_bXiIXRjTFqc6_pDJz8LEfLrjEE9zQAlnF0GBgCK5916";
+// const streamKey = "sk_eu-west-1_bXiIXRjTFqc6_pDJz8LEfLrjEE9zQAlnF0GBgCK5916";
 
 async function retrieveMediaStream() {
   const devices = await navigator.mediaDevices.enumerateDevices();
