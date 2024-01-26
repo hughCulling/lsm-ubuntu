@@ -88,7 +88,9 @@ const signUpUser = async () => {
     console.log(input);
     const command = new CreateChannelCommand(input);
     const response = await ivs_client.send(command);
-    console.log(response);
+    console.log(response.channel.ingestEndpoint);
+    console.log(response.channel.playbackUrl);
+    console.log(response.streamKey.value);
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
