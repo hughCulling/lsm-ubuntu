@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Use the streamKey variable as needed
   console.log(playbackUrl);
 });
+
+let playbackUrl = "";
+
 if (IVSPlayer.isPlayerSupported) {
   const player = IVSPlayer.create();
   player.attachHTMLVideoElement(document.getElementById("video-player"));
