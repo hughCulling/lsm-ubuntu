@@ -4,15 +4,24 @@
 //   console.log(`Server is running on http://localhost:${port}`);
 // });
 
-const express = require("express");
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const { MongoClient } = require("mongodb");
-const uri = require("./atlas_uri.js");
-const bodyParser = require("body-parser");
-const session = require("express-session");
-// import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
+// const express = require("express");
+// const https = require("https");
+// const fs = require("fs");
+// const path = require("path");
+// const { MongoClient } = require("mongodb");
+// const uri = require("./atlas_uri.js");
+// const bodyParser = require("body-parser");
+// const session = require("express-session");
+
+import express from "express";
+import https from "https";
+import fs from "fs";
+import path from "path";
+import { MongoClient } from "mongodb";
+import uri from "./atlas_uri.js";
+import bodyParser from "body-parser";
+import session from "express-session";
+import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 
 const app = express();
 const client = new MongoClient(uri);
