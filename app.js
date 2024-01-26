@@ -92,7 +92,7 @@ const signUpUser = async () => {
   } finally {
     input = {
       // CreateChannelRequest
-      name: `{$result.insertedId}`,
+      name: `${result.insertedId}`,
       latencyMode: "NORMAL",
       type: "BASIC",
       authorized: false,
