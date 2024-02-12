@@ -1,18 +1,4 @@
-// // Start the server on port 3000
-// const port = 80;
-// app.listen(port, () => {
-//   console.log(`Server is running on http://localhost:${port}`);
-// });
-
-// const express = require("express");
-// const https = require("https");
-// const fs = require("fs");
-// const path = require("path");
-// const { MongoClient } = require("mongodb");
-// const uri = require("./atlas_uri.js");
-// const bodyParser = require("body-parser");
-// const session = require("express-session");
-
+// Had to convert from CommonJS to ESM
 import express from "express";
 import https from "https";
 import fs from "fs";
@@ -26,21 +12,24 @@ import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 import { fileURLToPath } from "url";
 
 const app = express();
+// MongoDB instantiations
 const client = new MongoClient(uri);
 const dbname = "live-stream-music";
 const collection_name = "users";
 const usersCollection = client.db(dbname).collection(collection_name);
 let userAccount = {
-  name: "Hugh",
-  email: "Culling",
+  name: "Hugh Wilfred Culling",
+  email: "hughculling@icloud.com",
   password: "pw123",
 };
 let documentToFind = { email: "lornica@lsm.com" };
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// IVS instantiations
 const ivs_client = new IvsClient({ region: "eu-west-1" });
-let input = {
+let ivsChannelMetaData = {
   // CreateChannelRequest
   name: "lsm_channel",
   latencyMode: "NORMAL",
@@ -53,9 +42,8 @@ let input = {
   insecureIngest: false,
   preset: "",
 };
-// const command = new CreateChannelCommand(input);
-// const response = await ivs_client.send(command);
 
+// MongoDB function definitions
 const connectToDatabase = async () => {
   try {
     await client.connect();
@@ -70,9 +58,12 @@ const connectToDatabase = async () => {
 const signUpUser = async () => {
   try {
     await connectToDatabase();
+    // userAccount given new values before function call
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
-    input = {
+
+    // ivsChannelMetaData object updated after document inserted to use retrieved _id
+    ivsChannelMetaData = {
       // CreateChannelRequest
       name: `${result.insertedId}`,
       latencyMode: "NORMAL",
@@ -85,12 +76,19 @@ const signUpUser = async () => {
       insecureIngest: false,
       preset: "",
     };
-    console.log(input);
-    const command = new CreateChannelCommand(input);
+    console.log("ivsChannelMetaData = " + ivsChannelMetaData);
+    // 'command' and 'response' are initialised here
+    // so that they receive updated ivsChannelMetaData object
+    const command = new CreateChannelCommand(ivsChannelMetaData);
     const response = await ivs_client.send(command);
-    console.log(response.channel.ingestEndpoint);
-    console.log(response.channel.playbackUrl);
-    console.log(response.streamKey.value);
+    console.log(
+      "response.channel.ingestEndpoint = " + response.channel.ingestEndpoint
+    );
+    console.log(
+      "response.channel.playbackUrl = " + response.channel.playbackUrl
+    );
+    console.log("response.streamKey.value = " + response.streamKey.value);
+    // Update inserted document to include the 'streamKey' and 'playbackUrl'
     const documentToUpdate = { _id: new ObjectId(result.insertedId) };
     const update = {
       $set: {
@@ -108,21 +106,6 @@ const signUpUser = async () => {
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
-    // input = {
-    //   // CreateChannelRequest
-    //   name: `${result.insertedId}`,
-    //   latencyMode: "NORMAL",
-    //   type: "BASIC",
-    //   authorized: false,
-    //   recordingConfigurationArn: "",
-    //   tags: {
-    //     // Tags
-    //   },
-    //   insecureIngest: false,
-    //   preset: "",
-    // };
-    // console.log(input);
-    // const response = await ivs_client.send(command);
     await client.close();
   }
 };
