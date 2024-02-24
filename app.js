@@ -138,7 +138,7 @@ app.use(
 );
 
 // Returns respective 'href' based on whether user is signed in
-// function getUserIdPage(req) {
+// function getIdPage(req) {
 //   if (req.session.user) {
 //     console.log("They are signed in.");
 //     console.log(`req.session.user = ${req.session.user}`);
@@ -153,18 +153,16 @@ app.get("/", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
     console.log(`req.session.user = ${req.session.user}`);
-    let id = "/" + req.session.user._id;
-    // let userIdPage = getUserIdPage(req);
+    let idPage = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
-      href: `${id}`,
+      href: `${idPage}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
-      // href: `${id}`,
       href: "/sign-in.html",
       status: "User: not signed in",
     });
