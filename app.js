@@ -139,12 +139,20 @@ app.use(
 
 // Returns respective 'href' based on whether user is signed in
 function getIdPage(req) {
-  return "/" + req.session.user._id;
+  if (req.session.user) {
+    console.log("They are signed in.");
+    console.log(`req.session.user = ${req.session.user}`);
+    return "/" + req.session.user._id;
+  }
 }
 
 // Returns respective 'status' based on whether user is signed in
 function getStatusMessage(req) {
-  return `Signed in as: ${req.session.user.name}`;
+  if (req.session.user) {
+    console.log("getStatusMessage() They are signed in.");
+    console.log(`req.session.user = ${req.session.user}`);
+    return `Signed in as: ${req.session.user.name}`;
+  }
 }
 
 app.get("/", (req, res) => {
