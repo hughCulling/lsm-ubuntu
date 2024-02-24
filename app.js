@@ -162,11 +162,6 @@ function getStatusMessage(req) {
 }
 
 app.get("/", (req, res) => {
-  // Check if user is signed in to update 'status' and 'href'
-  // if (req.session.user) {
-  //   console.log("They are signed in.");
-  //   console.log(`req.session.user = ${req.session.user}`);
-
   let idPage = getIdPage(req);
   console.log(`idPage = ${idPage}`);
   let statusMessage = getStatusMessage(req);
@@ -177,14 +172,6 @@ app.get("/", (req, res) => {
     href: `${idPage}`,
     status: `${statusMessage}`,
   });
-  // } else {
-  //   console.log("They are not signed in.");
-  //   res.render(path.join(__dirname, "views", "index.pug"), {
-  //     title: "Live Stream Music",
-  //     href: "/sign-in.html",
-  //     status: "User: not signed in",
-  //   });
-  // }
 });
 
 app.get("/broadcast.html", (req, res) => {
