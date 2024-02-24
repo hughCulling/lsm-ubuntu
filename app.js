@@ -143,6 +143,9 @@ function getIdPage(req) {
     console.log("They are signed in.");
     console.log(`req.session.user = ${req.session.user}`);
     return "/" + req.session.user._id;
+  } else {
+    console.log("getIdPage() They are not signed in.");
+    return "/sign-in.html";
   }
 }
 
@@ -152,33 +155,36 @@ function getStatusMessage(req) {
     console.log("getStatusMessage() They are signed in.");
     console.log(`req.session.user = ${req.session.user}`);
     return `Signed in as: ${req.session.user.name}`;
+  } else {
+    console.log("getStatusMessage() They are not signed in.");
+    return "User: not signed in";
   }
 }
 
 app.get("/", (req, res) => {
   // Check if user is signed in to update 'status' and 'href'
-  if (req.session.user) {
-    console.log("They are signed in.");
-    console.log(`req.session.user = ${req.session.user}`);
+  // if (req.session.user) {
+  //   console.log("They are signed in.");
+  //   console.log(`req.session.user = ${req.session.user}`);
 
-    let idPage = getIdPage(req);
-    console.log(`idPage = ${idPage}`);
-    let statusMessage = getStatusMessage(req);
-    console.log(`statusMessage = ${statusMessage}`);
+  let idPage = getIdPage(req);
+  console.log(`idPage = ${idPage}`);
+  let statusMessage = getStatusMessage(req);
+  console.log(`statusMessage = ${statusMessage}`);
 
-    res.render(path.join(__dirname, "views", "index.pug"), {
-      title: "Live Stream Music",
-      href: `${idPage}`,
-      status: `${statusMessage}`,
-    });
-  } else {
-    console.log("They are not signed in.");
-    res.render(path.join(__dirname, "views", "index.pug"), {
-      title: "Live Stream Music",
-      href: "/sign-in.html",
-      status: "User: not signed in",
-    });
-  }
+  res.render(path.join(__dirname, "views", "index.pug"), {
+    title: "Live Stream Music",
+    href: `${idPage}`,
+    status: `${statusMessage}`,
+  });
+  // } else {
+  //   console.log("They are not signed in.");
+  //   res.render(path.join(__dirname, "views", "index.pug"), {
+  //     title: "Live Stream Music",
+  //     href: "/sign-in.html",
+  //     status: "User: not signed in",
+  //   });
+  // }
 });
 
 app.get("/broadcast.html", (req, res) => {
