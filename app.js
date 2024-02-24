@@ -12,7 +12,7 @@ import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 import { fileURLToPath } from "url";
 
 const app = express();
-// MongoDB instantiations
+// MongoDB instantiations and declarations, needed for function definitions
 const client = new MongoClient(uri);
 const dbname = "live-stream-music";
 const collection_name = "users";
@@ -24,11 +24,16 @@ let userAccount = {
 };
 let documentToFind = { email: "lornica@lsm.com" };
 
+// Used as parameter in 'res.render()' function to
+// find path to pug files
 const __filename = fileURLToPath(import.meta.url);
+console.log(`__filename = ${__filename}`);
 const __dirname = dirname(__filename);
+console.log(`__dirname = ${__dirname}`);
 
-// IVS instantiations
+// IVS instantiations and declarations, needed for 'signUpUser()' function
 const ivs_client = new IvsClient({ region: "eu-west-1" });
+// 'name' field will get changed in 'signUpUser()' function
 let ivsChannelMetaData = {
   // CreateChannelRequest
   name: "lsm_channel",
@@ -55,6 +60,9 @@ const connectToDatabase = async () => {
   }
 };
 
+// Insert document with user input and automatic ObjectId.
+// Create an IVS channel with ObjectId as 'name' and update
+// document with 'streamKey' and 'playbackUrl'
 const signUpUser = async () => {
   try {
     await connectToDatabase();
@@ -63,32 +71,32 @@ const signUpUser = async () => {
     console.log(`Inserted document: ${result.insertedId}`);
 
     // ivsChannelMetaData object updated after document inserted to use retrieved _id
-    ivsChannelMetaData = {
-      // CreateChannelRequest
-      name: `${result.insertedId}`,
-      latencyMode: "NORMAL",
-      type: "BASIC",
-      authorized: false,
-      recordingConfigurationArn: "",
-      tags: {
-        // Tags
-      },
-      insecureIngest: false,
-      preset: "",
-    };
-    console.log("ivsChannelMetaData = " + ivsChannelMetaData);
-    // 'command' and 'response' are initialised here
-    // so that they receive updated ivsChannelMetaData object
+    // ivsChannelMetaData = {
+    //   // CreateChannelRequest
+    //   name: `${result.insertedId}`,
+    //   latencyMode: "NORMAL",
+    //   type: "BASIC",
+    //   authorized: false,
+    //   recordingConfigurationArn: "",
+    //   tags: {
+    //     // Tags
+    //   },
+    //   insecureIngest: false,
+    //   preset: "",
+    // };
+    ivsChannelMetaData.name = `${result.insertedId}`;
+    console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
+    // 'command' and 'response' are instantiated and declared here
+    // so that they receive updated 'ivsChannelMetaData' object
     const command = new CreateChannelCommand(ivsChannelMetaData);
     const response = await ivs_client.send(command);
     console.log(
-      "response.channel.ingestEndpoint = " + response.channel.ingestEndpoint
+      `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
+      \nresponse.channel.playbackUrl = ${response.channel.playbackUrl}
+      \nresponse.streamKey.value = ${response.streamKey.value}`
     );
-    console.log(
-      "response.channel.playbackUrl = " + response.channel.playbackUrl
-    );
-    console.log("response.streamKey.value = " + response.streamKey.value);
     // Update inserted document to include the 'streamKey' and 'playbackUrl'
+    // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'
     const documentToUpdate = { _id: new ObjectId(result.insertedId) };
     const update = {
       $set: {
@@ -113,6 +121,7 @@ const signUpUser = async () => {
 const signInUser = async () => {
   try {
     await connectToDatabase();
+    // documentToFind is updated before the function call.
     let result = await usersCollection.findOne(documentToFind);
     console.log(`Found one document`);
     console.log(result);
@@ -124,10 +133,12 @@ const signInUser = async () => {
   }
 };
 
-// view engine setup
+// Specifies which templating engine to use
+// Allows use of 'res.render()'
 app.set("view engine", "pug");
-
+// Allows serving of static files from 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
+// Allows information sent in POST request to be retrieved
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
@@ -138,15 +149,24 @@ app.use(
   })
 );
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
-// });
+// Returns respective href based on whether user is signed in
+function getUserIdPage(req) {
+  if (req.session.user) {
+    console.log("They are signed in.");
+    console.log("req.session.user = " + req.session.user);
+    return "/" + req.session.user._id;
+  } else {
+    return "/sign-in.html";
+  }
+}
 
 app.get("/", (req, res) => {
+  // Check if user is signed in to update 'status' and 'href'
   if (req.session.user) {
     console.log("They are signed in.");
     console.log(req.session.user);
     let id = "/" + req.session.user._id;
+    let userIdPage = getUserIdPage(req);
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
       href: `${id}`,
@@ -156,15 +176,12 @@ app.get("/", (req, res) => {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
-      href: "/sign-in.html",
+      // href: `${id}`,
+      href: userIdPage,
       status: "User: not signed in",
     });
   }
 });
-
-// app.get("/broadcast.html", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "html", "broadcast.html"));
-// });
 
 app.get("/broadcast.html", (req, res) => {
   if (req.session.user) {
@@ -185,10 +202,6 @@ app.get("/broadcast.html", (req, res) => {
   }
 });
 
-// app.get("/playback.html", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "html", "playback.html"));
-// });
-
 app.get("/playback.html", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
@@ -207,10 +220,6 @@ app.get("/playback.html", (req, res) => {
     });
   }
 });
-
-// app.get("/sign-up.html", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "html", "sign-up.html"));
-// });
 
 app.get("/sign-up.html", (req, res) => {
   if (req.session.user) {
@@ -231,10 +240,6 @@ app.get("/sign-up.html", (req, res) => {
   }
 });
 
-// app.get("/sign-in.html", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "html", "sign-in.html"));
-// });
-
 app.get("/sign-in.html", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
@@ -253,10 +258,6 @@ app.get("/sign-in.html", (req, res) => {
     });
   }
 });
-
-// app.get("/:id", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "html", "user.html"));
-// });
 
 app.get("/:id", async (req, res) => {
   let currentUrl = req.url;
