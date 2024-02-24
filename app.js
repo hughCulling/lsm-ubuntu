@@ -177,7 +177,7 @@ app.get("/", (req, res) => {
     res.render(path.join(__dirname, "views", "index.pug"), {
       title: "Live Stream Music",
       // href: `${id}`,
-      href: userIdPage,
+      href: "/sign-in.html",
       status: "User: not signed in",
     });
   }
