@@ -25,7 +25,7 @@ let userAccount = {
 let documentToFind = { email: "lornica@lsm.com" };
 
 // Used as parameter in 'res.render()' function to
-// find path to pug files
+// find path to Pug files
 const __filename = fileURLToPath(import.meta.url);
 console.log(`__filename = ${__filename}`);
 const __dirname = dirname(__filename);
@@ -71,29 +71,17 @@ const signUpUser = async () => {
     console.log(`Inserted document: ${result.insertedId}`);
 
     // ivsChannelMetaData object updated after document inserted to use retrieved _id
-    // ivsChannelMetaData = {
-    //   // CreateChannelRequest
-    //   name: `${result.insertedId}`,
-    //   latencyMode: "NORMAL",
-    //   type: "BASIC",
-    //   authorized: false,
-    //   recordingConfigurationArn: "",
-    //   tags: {
-    //     // Tags
-    //   },
-    //   insecureIngest: false,
-    //   preset: "",
-    // };
     ivsChannelMetaData.name = `${result.insertedId}`;
     console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
+
     // 'command' and 'response' are instantiated and declared here
     // so that they receive updated 'ivsChannelMetaData' object
     const command = new CreateChannelCommand(ivsChannelMetaData);
     const response = await ivs_client.send(command);
     console.log(
       `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
-      \nresponse.channel.playbackUrl = ${response.channel.playbackUrl}
-      \nresponse.streamKey.value = ${response.streamKey.value}`
+      response.channel.playbackUrl = ${response.channel.playbackUrl}
+      response.streamKey.value = ${response.streamKey.value}`
     );
     // Update inserted document to include the 'streamKey' and 'playbackUrl'
     // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'
