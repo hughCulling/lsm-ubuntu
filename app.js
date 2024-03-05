@@ -74,7 +74,7 @@ const signUpUser = async () => {
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
 
-    // ivsChannelMetaData object updated after document inserted to use retrieved _id
+    // 'ivsChannelMetaData' object updated after document inserted to use retrieved '_id'
     ivsChannelMetaData.name = `${result.insertedId}`;
     console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
 
