@@ -30,8 +30,10 @@ let documentToFind = { email: "lornica@lsm.com" };
 // find path to Pug files
 const __filename = fileURLToPath(import.meta.url);
 console.log(`__filename = ${__filename}`);
+// Prints '/root/lsm-ubuntu/app.js'
 const __dirname = dirname(__filename);
 console.log(`__dirname = ${__dirname}`);
+// Prints '/root/lsm-ubuntu'
 
 // IVS instantiations and declarations, needed for 'signUpUser()' function
 const ivs_client = new IvsClient({ region: "eu-west-1" });
