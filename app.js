@@ -143,8 +143,9 @@ app.use(
 
 // Returns respective 'href' based on whether user is signed in
 function getIdPage(req) {
+  // Checks whether a session exists, meaning they would've signed in.
   if (req.session.user) {
-    console.log("They are signed in.");
+    console.log("getIdPage() They are signed in.");
     console.log(`req.session.user = ${req.session.user}`);
     return "/" + req.session.user._id;
   } else {
