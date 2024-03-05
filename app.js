@@ -70,7 +70,7 @@ const connectToDatabase = async () => {
 const signUpUser = async () => {
   try {
     await connectToDatabase();
-    // userAccount given new values before function call
+    // userAccount given new values before 'signUpUser()' function call
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
 
