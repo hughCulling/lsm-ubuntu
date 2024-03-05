@@ -17,11 +17,13 @@ const client = new MongoClient(uri);
 const dbname = "live-stream-music";
 const collection_name = "users";
 const usersCollection = client.db(dbname).collection(collection_name);
+// Used in 'signUpUser()' function
 let userAccount = {
   name: "Hugh Wilfred Culling",
   email: "hughculling@icloud.com",
   password: "pw123",
 };
+// Used in 'signInUser()' function
 let documentToFind = { email: "lornica@lsm.com" };
 
 // Used as parameter in 'res.render()' function to
