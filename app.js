@@ -113,7 +113,7 @@ const signUpUser = async () => {
 const signInUser = async () => {
   try {
     await connectToDatabase();
-    // documentToFind is updated before the function call.
+    // documentToFind is updated before function call.
     let result = await usersCollection.findOne(documentToFind);
     console.log(`Found one document`);
     console.log(`result = ${result}`);
