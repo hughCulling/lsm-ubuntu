@@ -72,7 +72,7 @@ const signUpUser = async () => {
     await connectToDatabase();
 
     // Check whether email is already associated with an account
-    documentToFind = userAccount.email;
+    documentToFind = { email: `${userAccount.email}` };
     console.log(`documentToFind = ${documentToFind}`);
 
     // userAccount given new values before 'signUpUser()' function call
