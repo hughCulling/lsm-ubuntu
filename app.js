@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { dirname } from "path";
 import { MongoClient, ObjectId } from "mongodb";
-import uri from "./atlas_uri.js";
+import atlasUri from "./atlas_uri.js";
 import bodyParser from "body-parser";
 import session from "express-session";
 import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
@@ -13,7 +13,7 @@ import { fileURLToPath } from "url";
 
 const app = express();
 // MongoDB instantiations and declarations, needed for function definitions
-const mongoClient = new MongoClient(uri);
+const mongoClient = new MongoClient(atlasUri);
 const dbname = "live-stream-music";
 const collectionName = "users";
 const usersCollection = mongoClient.db(dbname).collection(collectionName);
