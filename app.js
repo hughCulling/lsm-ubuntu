@@ -70,6 +70,11 @@ const connectToDatabase = async () => {
 const signUpUser = async () => {
   try {
     await connectToDatabase();
+
+    // Check whether email is already associated with an account
+    documentToFind = userAccount.email;
+    console.log(`documentToFind = ${documentToFind}`);
+
     // userAccount given new values before 'signUpUser()' function call
     let result = await usersCollection.insertOne(userAccount);
     console.log(`Inserted document: ${result.insertedId}`);
