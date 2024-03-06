@@ -69,8 +69,6 @@ const connectToDatabase = async () => {
 // document with 'streamKey' and 'playbackUrl'
 const signUpUser = async () => {
   try {
-    await connectToDatabase();
-
     // Check whether email is already associated with an account
     // Insert user-entered email into 'documentToFind'
     documentToFind = { email: `${userAccount.email}` };
@@ -80,39 +78,45 @@ const signUpUser = async () => {
     let emailTaken = await signInUser();
     console.log(`emailTaken = ${emailTaken}`);
 
-    // userAccount given new values before 'signUpUser()' function call
-    let result = await usersCollection.insertOne(userAccount);
-    console.log(`Inserted document: ${result.insertedId}`);
+    await connectToDatabase();
 
-    // 'ivsChannelMetaData' object updated after document inserted to use retrieved '_id'
-    ivsChannelMetaData.name = `${result.insertedId}`;
-    console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
+    if (emailTaken == null) {
+      // userAccount given new values before 'signUpUser()' function call
+      let result = await usersCollection.insertOne(userAccount);
+      console.log(`Inserted document: ${result.insertedId}`);
 
-    // 'command' and 'response' are instantiated and declared here
-    // so that they receive updated 'ivsChannelMetaData' object
-    const command = new CreateChannelCommand(ivsChannelMetaData);
-    const response = await ivsClient.send(command);
-    console.log(
-      `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
+      // 'ivsChannelMetaData' object updated after document inserted to use retrieved '_id'
+      ivsChannelMetaData.name = `${result.insertedId}`;
+      console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
+
+      // 'command' and 'response' are instantiated and declared here
+      // so that they receive updated 'ivsChannelMetaData' object
+      const command = new CreateChannelCommand(ivsChannelMetaData);
+      const response = await ivsClient.send(command);
+      console.log(
+        `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
       response.channel.playbackUrl = ${response.channel.playbackUrl}
       response.streamKey.value = ${response.streamKey.value}`
-    );
-    // Update inserted document to include the 'streamKey' and 'playbackUrl'
-    // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'
-    const documentToUpdate = { _id: new ObjectId(result.insertedId) };
-    const update = {
-      $set: {
-        streamKey: `${response.streamKey.value}`,
-        playbackUrl: `${response.channel.playbackUrl}`,
-      },
-    };
-    let updateResult = await usersCollection.updateOne(
-      documentToUpdate,
-      update
-    );
-    updateResult.modifiedCount > 0
-      ? console.log(`Updated ${updateResult.modifiedCount} documents`)
-      : console.log("No documents updated");
+      );
+      // Update inserted document to include the 'streamKey' and 'playbackUrl'
+      // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'
+      const documentToUpdate = { _id: new ObjectId(result.insertedId) };
+      const update = {
+        $set: {
+          streamKey: `${response.streamKey.value}`,
+          playbackUrl: `${response.channel.playbackUrl}`,
+        },
+      };
+      let updateResult = await usersCollection.updateOne(
+        documentToUpdate,
+        update
+      );
+      updateResult.modifiedCount > 0
+        ? console.log(`Updated ${updateResult.modifiedCount} documents`)
+        : console.log("No documents updated");
+    } else {
+      console.log("Email already taken");
+    }
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
