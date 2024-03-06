@@ -13,10 +13,10 @@ import { fileURLToPath } from "url";
 
 const app = express();
 // MongoDB instantiations and declarations, needed for function definitions
-const client = new MongoClient(uri);
+const mongoClient = new MongoClient(uri);
 const dbname = "live-stream-music";
 const collection_name = "users";
-const usersCollection = client.db(dbname).collection(collection_name);
+const usersCollection = mongoClient.db(dbname).collection(collection_name);
 // Used in 'signUpUser()' function
 let userAccount = {
   name: "Hugh Wilfred Culling",
@@ -55,7 +55,7 @@ let ivsChannelMetaData = {
 // MongoDB function definitions
 const connectToDatabase = async () => {
   try {
-    await client.connect();
+    await mongoClient.connect();
     console.log(
       `Connected to the ${dbname} database 🌍 \nFull connection string: ${uri}`
     );
@@ -106,7 +106,7 @@ const signUpUser = async () => {
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
-    await client.close();
+    await mongoClient.close();
   }
 };
 
@@ -121,7 +121,7 @@ const signInUser = async () => {
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
   } finally {
-    await client.close();
+    await mongoClient.close();
   }
 };
 
