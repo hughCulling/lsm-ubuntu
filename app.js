@@ -15,8 +15,8 @@ const app = express();
 // MongoDB instantiations and declarations, needed for function definitions
 const mongoClient = new MongoClient(uri);
 const dbname = "live-stream-music";
-const collection_name = "users";
-const usersCollection = mongoClient.db(dbname).collection(collection_name);
+const collectionName = "users";
+const usersCollection = mongoClient.db(dbname).collection(collectionName);
 // Used in 'signUpUser()' function
 let userAccount = {
   name: "Hugh Wilfred Culling",
@@ -36,7 +36,7 @@ console.log(`__dirname = ${__dirname}`);
 // Prints '/root/lsm-ubuntu'
 
 // IVS instantiations and declarations, needed for 'signUpUser()' function
-const ivs_client = new IvsClient({ region: "eu-west-1" });
+const ivsClient = new IvsClient({ region: "eu-west-1" });
 // 'name' field will get changed in 'signUpUser()' function
 let ivsChannelMetaData = {
   // CreateChannelRequest
@@ -81,7 +81,7 @@ const signUpUser = async () => {
     // 'command' and 'response' are instantiated and declared here
     // so that they receive updated 'ivsChannelMetaData' object
     const command = new CreateChannelCommand(ivsChannelMetaData);
-    const response = await ivs_client.send(command);
+    const response = await ivsClient.send(command);
     console.log(
       `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
       response.channel.playbackUrl = ${response.channel.playbackUrl}
