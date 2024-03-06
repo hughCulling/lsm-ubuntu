@@ -72,8 +72,13 @@ const signUpUser = async () => {
     await connectToDatabase();
 
     // Check whether email is already associated with an account
+    // Insert user-entered email into 'documentToFind'
     documentToFind = { email: `${userAccount.email}` };
     console.log(`documentToFind = ${documentToFind}`);
+
+    // If email already used, 'signInUser()' will return 'null'
+    let emailTaken = await signInUser();
+    console.log(`emailTaken = ${emailTaken}`);
 
     // userAccount given new values before 'signUpUser()' function call
     let result = await usersCollection.insertOne(userAccount);
