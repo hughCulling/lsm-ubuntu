@@ -57,7 +57,7 @@ const connectToDatabase = async () => {
   try {
     await mongoClient.connect();
     console.log(
-      `Connected to the ${dbname} database 🌍 \nFull connection string: ${uri}`
+      `Connected to the ${dbname} database 🌍 \nFull connection string: ${atlasUri}`
     );
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
