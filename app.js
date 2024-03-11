@@ -74,7 +74,7 @@ const signUpUser = async () => {
     documentToFind = { email: `${userAccount.email}` };
     console.log(`documentToFind = ${documentToFind}`);
 
-    // If email already used, 'signInUser()' will return 'null'
+    // If email not already used, 'signInUser()' will return 'null'
     let emailTaken = await signInUser();
     console.log(`emailTaken = ${emailTaken}`);
 
