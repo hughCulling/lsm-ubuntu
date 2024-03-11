@@ -235,14 +235,14 @@ app.get("/sign-up.html", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
-    res.render(path.join(__dirname, "views", "sign_up.pug"), {
+    res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
       href: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
-    res.render(path.join(__dirname, "views", "sign_up.pug"), {
+    res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
       href: "/sign-in.html",
       status: "User: not signed in",
@@ -317,14 +317,14 @@ app.post("/sign-up.html", function (req, res, next) {
   if (req.session.user) {
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
-    res.render(path.join(__dirname, "views", "sign_up.pug"), {
+    res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
       href: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
-    res.render(path.join(__dirname, "views", "sign_up.pug"), {
+    res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
       href: "/sign-in.html",
       status: "User: not signed in",
