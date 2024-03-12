@@ -41,7 +41,8 @@ async function retrieveMediaStream() {
   window.microphoneStream = await navigator.mediaDevices.getUserMedia({
     audio: { deviceId: window.audioDevices[0].deviceId },
   });
-  client.addVideoInputDevice(window.cameraStream, "camera1", { index: 0 }); // only 'index' is required for the position parameter
+  // only 'index' is required for the position parameter
+  client.addVideoInputDevice(window.cameraStream, "camera1", { index: 0 });
   client.addAudioInputDevice(window.microphoneStream, "mic1");
 }
 
