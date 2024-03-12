@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { dirname } from "path";
 import { MongoClient, ObjectId } from "mongodb";
-import atlasUri from "./atlas_uri.js";
+import atlasUri from "./atlas-uri.js";
 import bodyParser from "body-parser";
 import session from "express-session";
 import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
