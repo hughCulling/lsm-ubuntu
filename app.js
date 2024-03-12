@@ -1,4 +1,4 @@
-// Had to convert from CommonJS to ESM
+// Had to convert from CommonJS to ESM.
 import express from "express";
 import https from "https";
 import fs from "fs";
@@ -12,46 +12,46 @@ import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 import { fileURLToPath } from "url";
 
 const app = express();
-// MongoDB instantiations and declarations, needed for function definitions
+// MongoDB instantiations and declarations, needed for function definitions.
 const mongoClient = new MongoClient(atlasUri);
 const dbname = "live-stream-music";
 const collectionName = "users";
 const usersCollection = mongoClient.db(dbname).collection(collectionName);
-// Used in 'signUpUser()' function
+// Used in 'signUpUser()' function.
 let userAccount = {
   name: "Hugh Wilfred Culling",
   email: "hughculling@icloud.com",
   password: "pw123",
 };
-// Used in 'signInUser()' function
+// Used in 'signInUser()' function.
 let documentToFind = { email: "lornica@lsm.com" };
 
-// Used as parameter in 'res.render()' function to find path to Pug files
+// Used as parameter in 'res.render()' function to find path to Pug files.
 const __filename = fileURLToPath(import.meta.url);
 console.log(`__filename = ${__filename}`);
-// Prints '/root/lsm-ubuntu/app.js'
+// Prints '/root/lsm-ubuntu/app.js'.
 const __dirname = dirname(__filename);
 console.log(`__dirname = ${__dirname}`);
-// Prints '/root/lsm-ubuntu'
+// Prints '/root/lsm-ubuntu'.
 
-// IVS instantiations and declarations, needed for 'signUpUser()' function
+// IVS instantiations and declarations, needed for 'signUpUser()' function.
 const ivsClient = new IvsClient({ region: "eu-west-1" });
-// 'name' field will get changed in 'signUpUser()' function
+// 'name' field will get changed in 'signUpUser()' function.
 let ivsChannelMetaData = {
-  // CreateChannelRequest
+  // CreateChannelRequest.
   name: "lsm_channel",
   latencyMode: "NORMAL",
   type: "BASIC",
   authorized: false,
   recordingConfigurationArn: "",
   tags: {
-    // Tags
+    // Tags.
   },
   insecureIngest: false,
   preset: "",
 };
 
-// MongoDB function definitions
+// MongoDB function definitions.
 const connectToDatabase = async () => {
   try {
     await mongoClient.connect();
@@ -64,33 +64,33 @@ const connectToDatabase = async () => {
 };
 
 // Insert document with user input and automatic ObjectId.
-// Create an IVS channel with ObjectId as 'name' and update
-// document with 'streamKey' and 'playbackUrl'
+// Create an IVS channel with ObjectId as 'name' and update document with
+// 'streamKey' and 'playbackUrl'.
 const signUpUser = async () => {
   try {
-    // Check whether email is already associated with an account
-    // Insert user-entered email into 'documentToFind'
+    // Check whether email is already associated with an account.
+    // Insert user-entered email into 'documentToFind'.
     documentToFind = { email: `${userAccount.email}` };
     console.log(`documentToFind = ${documentToFind}`);
 
-    // If email not already used, 'signInUser()' will return 'null'
+    // If email not already used, 'signInUser()' will return 'null'.
     let emailTaken = await signInUser();
     console.log(`emailTaken = ${emailTaken}`);
 
     await connectToDatabase();
 
     if (emailTaken == null) {
-      // userAccount given new values before 'signUpUser()' function call
+      // userAccount given new values before 'signUpUser()' function call.
       let result = await usersCollection.insertOne(userAccount);
       console.log(`Inserted document: ${result.insertedId}`);
 
       // 'ivsChannelMetaData' object updated after document inserted to use
-      // retrieved '_id'
+      // retrieved '_id'.
       ivsChannelMetaData.name = `${result.insertedId}`;
       console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
 
       // 'command' and 'response' are instantiated and declared here so that
-      // they receive updated 'ivsChannelMetaData' object
+      // they receive updated 'ivsChannelMetaData' object.
       const command = new CreateChannelCommand(ivsChannelMetaData);
       const response = await ivsClient.send(command);
       console.log(
@@ -98,8 +98,8 @@ const signUpUser = async () => {
       response.channel.playbackUrl = ${response.channel.playbackUrl}
       response.streamKey.value = ${response.streamKey.value}`
       );
-      // Update inserted document to include the 'streamKey' and 'playbackUrl'
-      // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'
+      // Update inserted document to include the 'streamKey' and 'playbackUrl'.
+      // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'.
       const documentToUpdate = { _id: new ObjectId(result.insertedId) };
       const update = {
         $set: {
@@ -139,12 +139,12 @@ const signInUser = async () => {
   }
 };
 
-// Specifies which templating engine to use
-// Allows use of 'res.render()'
+// Specifies which templating engine to use.
+// Allows use of 'res.render()'.
 app.set("view engine", "pug");
-// Allows serving of static files from 'public' directory
+// Allows serving of static files from 'public' directory.
 app.use(express.static(path.join(__dirname, "public")));
-// Allows information sent in POST request to be retrieved
+// Allows information sent in POST request to be retrieved.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
@@ -155,7 +155,7 @@ app.use(
   })
 );
 
-// Returns respective 'href' based on whether user is signed in
+// Returns respective 'href' based on whether user is signed in.
 function getIdPage(req) {
   // Checks whether a session exists, meaning they would've signed in.
   if (req.session.user) {
@@ -168,7 +168,7 @@ function getIdPage(req) {
   }
 }
 
-// Returns respective 'status' based on whether user is signed in
+// Returns respective 'status' based on whether user is signed in.
 function getStatusMessage(req) {
   if (req.session.user) {
     console.log("getStatusMessage() They are signed in.");

@@ -1,15 +1,15 @@
-// Access the streamKey value from the data attribute
+// Access the streamKey value from the data attribute.
 //const streamKey = document.getElementById("streamKeyScript").dataset.streamKey;
 
-// Use the streamKey variable as needed
-// Wait for the DOM content to load before accessing the script tag
+// Use the streamKey variable as needed.
+// Wait for the DOM content to load before accessing the script tag.
 document.addEventListener("DOMContentLoaded", function () {
-  // Access the streamKey value from the data attribute
+  // Access the streamKey value from the data attribute.
   streamKey = document
     .querySelector("script[data-stream-key]")
     .getAttribute("data-stream-key");
 
-  // Use the streamKey variable as needed
+  // Use the streamKey variable as needed.
   console.log(streamKey);
 });
 const client = IVSBroadcastClient.create({
@@ -41,7 +41,7 @@ async function retrieveMediaStream() {
   window.microphoneStream = await navigator.mediaDevices.getUserMedia({
     audio: { deviceId: window.audioDevices[0].deviceId },
   });
-  // only 'index' is required for the position parameter
+  // only 'index' is required for the position parameter.
   client.addVideoInputDevice(window.cameraStream, "camera1", { index: 0 });
   client.addAudioInputDevice(window.microphoneStream, "mic1");
 }
