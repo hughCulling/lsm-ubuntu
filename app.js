@@ -29,10 +29,10 @@ let documentToFind = { email: "lornica@lsm.com" };
 // Used as parameter in 'res.render()' function to find path to Pug files.
 const __filename = fileURLToPath(import.meta.url);
 console.log(`__filename = ${__filename}`);
-// Prints '/root/lsm-ubuntu/app.js'.
+// Prints "/root/lsm-ubuntu/app.js".
 const __dirname = dirname(__filename);
 console.log(`__dirname = ${__dirname}`);
-// Prints '/root/lsm-ubuntu'.
+// Prints "/root/lsm-ubuntu".
 
 // IVS instantiations and declarations, needed for 'signUpUser()' function.
 const ivsClient = new IvsClient({ region: "eu-west-1" });
@@ -73,14 +73,14 @@ const signUpUser = async () => {
     documentToFind = { email: `${userAccount.email}` };
     console.log(`documentToFind = ${documentToFind}`);
 
-    // If email not already used, 'signInUser()' will return 'null'.
+    // If email not already used, 'signInUser()' will return "null".
     let emailTaken = await signInUser();
     console.log(`emailTaken = ${emailTaken}`);
 
     await connectToDatabase();
 
     if (emailTaken == null) {
-      // userAccount given new values before 'signUpUser()' function call.
+      // 'userAccount' given new values before 'signUpUser()' function call.
       let result = await usersCollection.insertOne(userAccount);
       console.log(`Inserted document: ${result.insertedId}`);
 
@@ -127,7 +127,7 @@ const signUpUser = async () => {
 const signInUser = async () => {
   try {
     await connectToDatabase();
-    // documentToFind is updated before function call.
+    // 'documentToFind' is updated before function call.
     let result = await usersCollection.findOne(documentToFind);
     console.log(`Found one document`);
     console.log(`result = ${result}`);
