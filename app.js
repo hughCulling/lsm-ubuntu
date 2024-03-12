@@ -26,8 +26,7 @@ let userAccount = {
 // Used in 'signInUser()' function
 let documentToFind = { email: "lornica@lsm.com" };
 
-// Used as parameter in 'res.render()' function to
-// find path to Pug files
+// Used as parameter in 'res.render()' function to find path to Pug files
 const __filename = fileURLToPath(import.meta.url);
 console.log(`__filename = ${__filename}`);
 // Prints '/root/lsm-ubuntu/app.js'
@@ -85,12 +84,13 @@ const signUpUser = async () => {
       let result = await usersCollection.insertOne(userAccount);
       console.log(`Inserted document: ${result.insertedId}`);
 
-      // 'ivsChannelMetaData' object updated after document inserted to use retrieved '_id'
+      // 'ivsChannelMetaData' object updated after document inserted to use
+      // retrieved '_id'
       ivsChannelMetaData.name = `${result.insertedId}`;
       console.log(`ivsChannelMetaData.name = ${ivsChannelMetaData.name}`);
 
-      // 'command' and 'response' are instantiated and declared here
-      // so that they receive updated 'ivsChannelMetaData' object
+      // 'command' and 'response' are instantiated and declared here so that
+      // they receive updated 'ivsChannelMetaData' object
       const command = new CreateChannelCommand(ivsChannelMetaData);
       const response = await ivsClient.send(command);
       console.log(
