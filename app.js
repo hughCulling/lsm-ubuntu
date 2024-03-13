@@ -93,6 +93,7 @@ const signUpUser = async () => {
       // they receive updated 'ivsChannelMetaData' object.
       const command = new CreateChannelCommand(ivsChannelMetaData);
       const response = await ivsClient.send(command);
+      // Had to separate the below logs to avoid indentation.
       console.log(
         `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}`
       );
