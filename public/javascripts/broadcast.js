@@ -1,7 +1,5 @@
-// Access the 'streamKey' value from the data attribute.
 // const streamKey = document.getElementById("streamKeyScript").dataset.streamKey;
 
-// Use the 'streamKey' variable as needed.
 // Wait for the DOM content to load before accessing the script tag.
 document.addEventListener("DOMContentLoaded", function () {
   // Access the 'streamKey' value from the data attribute.
