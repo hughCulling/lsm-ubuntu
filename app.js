@@ -312,6 +312,7 @@ app.get("/sign-out.html", (req, res) => {
     // Setting 'req.session.user' to null effectively kills the session.
     req.session.user = null;
     console.log(`req.session.user = ${req.session.user}`);
+    req.session.save();
     res.redirect("/");
   } else {
     console.log("They are not signed in.");
