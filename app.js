@@ -305,6 +305,20 @@ app.get("/:id", async (req, res) => {
   }
 });
 
+app.get("/sign-out.html", (req, res) => {
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    // Setting 'req.session.user' to null effectively kills the session.
+    req.session.user = null;
+    console.log(`req.session.user = ${req.session.user}`);
+    res.redirect("/");
+  } else {
+    console.log("They are not signed in.");
+    res.redirect("/");
+  }
+});
+
 app.post("/sign-up.html", function (req, res, next) {
   userAccount = {
     name: `${req.body.name}`,
