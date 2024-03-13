@@ -309,11 +309,17 @@ app.get("/sign-out.html", (req, res) => {
   if (req.session.user) {
     console.log("They are signed in.");
     let id = "/" + req.session.user._id;
-    // Setting 'req.session.user' to null effectively kills the session.
-    req.session.user = null;
-    console.log(`req.session.user = ${req.session.user}`);
-    req.session.save();
-    res.redirect("/");
+    // Clear session data:
+    req.session.destroy((err) => {
+      if (err) {
+        console.error(err);
+        return next(err);
+      }
+      // Clear the session cookie:
+      res.clearCookie("connect.sid");
+      // Redirect to the desired page after sign-out:
+      res.redirect("/"); // Redirect to the home page, or any other page you prefer
+    });
   } else {
     console.log("They are not signed in.");
     res.redirect("/");
