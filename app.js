@@ -94,10 +94,12 @@ const signUpUser = async () => {
       const command = new CreateChannelCommand(ivsChannelMetaData);
       const response = await ivsClient.send(command);
       console.log(
-        `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}\n
-        response.channel.playbackUrl = ${response.channel.playbackUrl}\n
-        response.streamKey.value = ${response.streamKey.value}`
+        `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}`
       );
+      console.log(
+        `response.channel.playbackUrl = ${response.channel.playbackUrl}`
+      );
+      console.log(`response.streamKey.value = ${response.streamKey.value}`);
       // Update inserted document to include the 'streamKey' and 'playbackUrl'.
       // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'.
       const documentToUpdate = { _id: new ObjectId(result.insertedId) };
