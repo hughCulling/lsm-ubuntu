@@ -94,8 +94,8 @@ const signUpUser = async () => {
       const command = new CreateChannelCommand(ivsChannelMetaData);
       const response = await ivsClient.send(command);
       console.log(
-        `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
-        response.channel.playbackUrl = ${response.channel.playbackUrl}
+        `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}\n
+        response.channel.playbackUrl = ${response.channel.playbackUrl}\n
         response.streamKey.value = ${response.streamKey.value}`
       );
       // Update inserted document to include the 'streamKey' and 'playbackUrl'.
