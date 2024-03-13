@@ -269,6 +269,35 @@ app.get("/sign-in.html", (req, res) => {
   }
 });
 
+app.get("/sign-out.html", (req, res) => {
+  if (req.session.user) {
+    console.log("They are signed in.");
+    let id = "/" + req.session.user._id;
+    // Clear session data:
+    req.session.destroy((err) => {
+      if (err) {
+        console.error(err);
+        return next(err);
+      }
+      // Clear the session cookie:
+      res.clearCookie("connect.sid");
+      // Redirect to the desired page after sign-out:
+      res.render(path.join(__dirname, "views", "sign-out.pug"), {
+        title: "Sign Out | Live Stream Music",
+        href: "/sign-in.html",
+        status: "User: not signed in",
+      });
+    });
+  } else {
+    console.log("They are not signed in.");
+    res.render(path.join(__dirname, "views", "sign-out.pug"), {
+      title: "Sign Out | Live Stream Music",
+      href: "/sign-in.html",
+      status: "User: not signed in",
+    });
+  }
+});
+
 app.get("/:id", async (req, res) => {
   let currentUrl = req.url;
   console.log("current URL = " + currentUrl);
@@ -301,35 +330,6 @@ app.get("/:id", async (req, res) => {
       href: "/sign-in.html",
       status: "User: not signed in",
       playbackUrl: `${result.playbackUrl}`,
-    });
-  }
-});
-
-app.get("/sign-out.html", (req, res) => {
-  if (req.session.user) {
-    console.log("They are signed in.");
-    let id = "/" + req.session.user._id;
-    // Clear session data:
-    req.session.destroy((err) => {
-      if (err) {
-        console.error(err);
-        return next(err);
-      }
-      // Clear the session cookie:
-      res.clearCookie("connect.sid");
-      // Redirect to the desired page after sign-out:
-      res.render(path.join(__dirname, "views", "sign-out.pug"), {
-        title: "Sign Out | Live Stream Music",
-        href: "/sign-in.html",
-        status: "User: not signed in",
-      });
-    });
-  } else {
-    console.log("They are not signed in.");
-    res.render(path.join(__dirname, "views", "sign-out.pug"), {
-      title: "Sign Out | Live Stream Music",
-      href: "/sign-in.html",
-      status: "User: not signed in",
     });
   }
 });
