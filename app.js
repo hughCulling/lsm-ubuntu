@@ -11,9 +11,21 @@ import session from "express-session";
 import { IvsClient, CreateChannelCommand } from "@aws-sdk/client-ivs";
 import { fileURLToPath } from "url";
 
-const app = express();
 // MongoDB instantiations and declarations, needed for function definitions.
 const mongoClient = new MongoClient(atlasUri);
+
+// MongoDB function definitions.
+const connectToDatabase = async () => {
+  try {
+    await mongoClient.connect();
+    console.log(
+      `Connected to the ${dbname} database 🌍 \nFull connection string: ${atlasUri}`
+    );
+  } catch (err) {
+    console.error(`Error connecting to the database: ${err}`);
+  }
+};
+
 const dbname = "live-stream-music";
 const collectionName = "users";
 const usersCollection = mongoClient.db(dbname).collection(collectionName);
@@ -23,16 +35,8 @@ let userAccount = {
   email: "hughculling@icloud.com",
   password: "pw123",
 };
-// Used in 'signInUser()' function.
+// Used in 'signUpUser()' and 'signInUser()' functions.
 let documentToFind = { email: "lornica@lsm.com" };
-
-// Used as parameter in 'res.render()' function to find path to Pug files.
-const __filename = fileURLToPath(import.meta.url);
-console.log(`__filename = ${__filename}`);
-// Prints "/root/lsm-ubuntu/app.js".
-const __dirname = dirname(__filename);
-console.log(`__dirname = ${__dirname}`);
-// Prints "/root/lsm-ubuntu".
 
 // IVS instantiations and declarations, needed for 'signUpUser()' function.
 const ivsClient = new IvsClient({ region: "eu-west-1" });
@@ -49,18 +53,6 @@ let ivsChannelMetaData = {
   },
   insecureIngest: false,
   preset: "",
-};
-
-// MongoDB function definitions.
-const connectToDatabase = async () => {
-  try {
-    await mongoClient.connect();
-    console.log(
-      `Connected to the ${dbname} database 🌍 \nFull connection string: ${atlasUri}`
-    );
-  } catch (err) {
-    console.error(`Error connecting to the database: ${err}`);
-  }
 };
 
 // Insert document with user input and automatic ObjectId.
@@ -142,6 +134,16 @@ const signInUser = async () => {
   }
 };
 
+// Used as parameter in 'res.render()' and 'app.use()' functions to find path
+// to Pug files.
+const __filename = fileURLToPath(import.meta.url);
+console.log(`__filename = ${__filename}`);
+// Prints "/root/lsm-ubuntu/app.js".
+const __dirname = dirname(__filename);
+console.log(`__dirname = ${__dirname}`);
+// Prints "/root/lsm-ubuntu".
+
+const app = express();
 // Specifies which templating engine to use.
 // Allows use of 'res.render()'.
 app.set("view engine", "pug");
