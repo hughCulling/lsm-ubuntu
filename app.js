@@ -318,11 +318,19 @@ app.get("/sign-out.html", (req, res) => {
       // Clear the session cookie:
       res.clearCookie("connect.sid");
       // Redirect to the desired page after sign-out:
-      res.redirect("/"); // Redirect to the home page, or any other page you prefer
+      res.render(path.join(__dirname, "views", "sign-out.pug"), {
+        title: "Sign Out | Live Stream Music",
+        href: "/sign-in.html",
+        status: "User: not signed in",
+      });
     });
   } else {
     console.log("They are not signed in.");
-    res.redirect("/");
+    res.render(path.join(__dirname, "views", "sign-out.pug"), {
+      title: "Sign Out | Live Stream Music",
+      href: "/sign-in.html",
+      status: "User: not signed in",
+    });
   }
 });
 
