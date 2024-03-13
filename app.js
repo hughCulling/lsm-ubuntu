@@ -95,8 +95,8 @@ const signUpUser = async () => {
       const response = await ivsClient.send(command);
       console.log(
         `response.channel.ingestEndpoint = ${response.channel.ingestEndpoint}
-      response.channel.playbackUrl = ${response.channel.playbackUrl}
-      response.streamKey.value = ${response.streamKey.value}`
+        response.channel.playbackUrl = ${response.channel.playbackUrl}
+        response.streamKey.value = ${response.streamKey.value}`
       );
       // Update inserted document to include the 'streamKey' and 'playbackUrl'.
       // The 'ingestEndpoint' is the same for all my channels in 'eu-west-1'.
