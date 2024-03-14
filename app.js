@@ -125,7 +125,7 @@ const retrieveDetails = async () => {
     // 'documentToFind' is updated before function call.
     let result = await usersCollection.findOne(documentToFind);
     console.log(`Found one document`);
-    console.log(`result = ${result}`);
+    console.log(`result = ${JSON.stringify(result)}`);
     return result;
   } catch (err) {
     console.error(`Error connecting to the database: ${err}`);
