@@ -125,6 +125,7 @@ const retrieveDetails = async () => {
     // 'documentToFind' is updated before function call.
     let result = await usersCollection.findOne(documentToFind);
     console.log(`Found one document`);
+    // Without 'JSON.stringify()' it would return: "[object Object]".
     console.log(`result = ${JSON.stringify(result)}`);
     return result;
   } catch (err) {
