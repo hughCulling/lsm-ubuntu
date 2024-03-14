@@ -148,8 +148,8 @@ const app = express();
 // Specifies which templating engine to use.
 // Allows use of 'res.render()'.
 app.set("view engine", "pug");
-// Allows serving of static files from 'public' directory.
-app.use(express.static(path.join(__dirname, "public")));
+// Allows serving of static files from 'static' directory.
+app.use(express.static(path.join(__dirname, "static")));
 // Allows information sent in POST request to be retrieved.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
