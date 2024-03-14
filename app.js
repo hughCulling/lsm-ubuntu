@@ -35,7 +35,7 @@ let userAccount = {
   email: "hughculling@icloud.com",
   password: "pw123",
 };
-// Used in 'signUpUser()' and 'signInUser()' functions.
+// Used in 'signUpUser()' and  'retrieveDetails()' functions.
 let documentToFind = { email: "lornica@lsm.com" };
 
 // IVS instantiations and declarations, needed for 'signUpUser()' function.
@@ -65,8 +65,8 @@ const signUpUser = async () => {
     documentToFind = { email: `${userAccount.email}` };
     console.log(`documentToFind = ${documentToFind}`);
 
-    // If email not already used, 'signInUser()' will return "null".
-    let emailTaken = await signInUser();
+    // If email not already used,  'retrieveDetails()' will return "null".
+    let emailTaken = await retrieveDetails();
     console.log(`emailTaken = ${emailTaken}`);
 
     await connectToDatabase();
@@ -119,7 +119,7 @@ const signUpUser = async () => {
   }
 };
 
-const signInUser = async () => {
+const retrieveDetails = async () => {
   try {
     await connectToDatabase();
     // 'documentToFind' is updated before function call.
@@ -328,7 +328,7 @@ app.get("/:id", async (req, res) => {
     documentToFind = {
       _id: new ObjectId(pageid),
     };
-    let result = await signInUser();
+    let result = await retrieveDetails();
     console.log(result);
     res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "User | Live Stream Music",
@@ -371,7 +371,7 @@ app.post("/sign-in.html", async function (req, res, next) {
     email: `${req.body.email}`,
     password: `${req.body.password}`,
   };
-  let result = await signInUser();
+  let result = await retrieveDetails();
   console.log("They signed in.");
   req.session.user = result;
   req.session.save();
