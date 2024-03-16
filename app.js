@@ -177,23 +177,9 @@ function decideBroadcastLink(req) {
   }
 }
 
-// Returns respective 'status' based on whether user is signed in.
-function getStatusMessage(req) {
-  if (req.session.user) {
-    console.log("getStatusMessage() They are signed in.");
-    console.log(`req.session.user = ${JSON.stringify(req.session.user)}`);
-    return `Signed in as: ${req.session.user.name}`;
-  } else {
-    console.log("getStatusMessage() They are not signed in.");
-    return "User: not signed in";
-  }
-}
-
 app.get("/", (req, res) => {
   let idPage = decideBroadcastLink(req);
   console.log(`idPage = ${idPage}`);
-  let statusMessage = getStatusMessage(req);
-  console.log(`statusMessage = ${statusMessage}`);
 
   res.render(path.join(__dirname, "views", "index.pug"), {
     title: "Live Stream Music",
