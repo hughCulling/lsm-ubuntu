@@ -167,10 +167,13 @@ function decideBroadcastLink(req) {
   if (req.session.user) {
     console.log("decideBroadcastLink() They are signed in.");
     console.log(`req.session.user = ${JSON.stringify(req.session.user)}`);
-    return { broadcastLink: `/${req.session.user._id}` };
+    return {
+      broadcastLink: `/${req.session.user._id}`,
+      status: `Signed in as: ${req.session.user.name}`,
+    };
   } else {
     console.log("decideBroadcastLink() They are not signed in.");
-    return "/sign-in.html";
+    return { broadcastLink: "/sign-in.html", status: "User: not signed in" };
   }
 }
 
@@ -195,7 +198,7 @@ app.get("/", (req, res) => {
   res.render(path.join(__dirname, "views", "index.pug"), {
     title: "Live Stream Music",
     broadcastLink: `${idPage.broadcastLink}`,
-    status: `${statusMessage}`,
+    status: `${idPage.status}`,
   });
 });
 
