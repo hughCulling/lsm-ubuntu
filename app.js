@@ -194,7 +194,7 @@ app.get("/", (req, res) => {
 
   res.render(path.join(__dirname, "views", "index.pug"), {
     title: "Live Stream Music",
-    broadcastLink: `${idPage[0]}`,
+    broadcastLink: `${idPage.broadcastLink}`,
     status: `${statusMessage}`,
   });
 });
