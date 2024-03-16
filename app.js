@@ -161,7 +161,7 @@ app.use(
   })
 );
 
-// Returns respective 'href' based on whether user is signed in.
+// Returns respective 'broadcastLink' based on whether user is signed in.
 function getIdPage(req) {
   // Checks whether a session exists, meaning they would've signed in.
   if (req.session.user) {
@@ -194,7 +194,7 @@ app.get("/", (req, res) => {
 
   res.render(path.join(__dirname, "views", "index.pug"), {
     title: "Live Stream Music",
-    href: `${idPage}`,
+    broadcastLink: `${idPage}`,
     status: `${statusMessage}`,
   });
 });
@@ -205,14 +205,14 @@ app.get("/broadcast.html", (req, res) => {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "broadcast.pug"), {
       title: "Broadcast | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "broadcast.pug"), {
       title: "Broadcast | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
@@ -224,14 +224,14 @@ app.get("/playback.html", (req, res) => {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "Playback | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "Playback | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
@@ -243,14 +243,14 @@ app.get("/sign-up.html", (req, res) => {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
@@ -262,14 +262,14 @@ app.get("/sign-in.html", (req, res) => {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "sign-in.pug"), {
       title: "Sign In | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "sign-in.pug"), {
       title: "Sign In | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
@@ -290,7 +290,7 @@ app.get("/sign-out.html", (req, res) => {
       // Redirect to the desired page after sign-out:
       res.render(path.join(__dirname, "views", "sign-out.pug"), {
         title: "Sign Out | Live Stream Music",
-        href: "/sign-in.html",
+        broadcastLink: "/sign-in.html",
         status: "User: not signed in",
       });
     });
@@ -298,7 +298,7 @@ app.get("/sign-out.html", (req, res) => {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "sign-out.pug"), {
       title: "Sign Out | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
@@ -319,7 +319,7 @@ app.get("/:id", async (req, res) => {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "user.pug"), {
       title: "User | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
       streamKey: `${req.session.user.streamKey}`,
     });
@@ -333,7 +333,7 @@ app.get("/:id", async (req, res) => {
     console.log(result);
     res.render(path.join(__dirname, "views", "playback.pug"), {
       title: "User | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
       playbackUrl: `${result.playbackUrl}`,
     });
@@ -354,14 +354,14 @@ app.post("/sign-up.html", function (req, res, next) {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "sign-up.pug"), {
       title: "Sign Up | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
@@ -384,14 +384,14 @@ app.post("/sign-in.html", async function (req, res, next) {
     let id = "/" + req.session.user._id;
     res.render(path.join(__dirname, "views", "sign-in.pug"), {
       title: "Sign In | Live Stream Music",
-      href: `${id}`,
+      broadcastLink: `${id}`,
       status: `Signed in as: ${req.session.user.name}`,
     });
   } else {
     console.log("They are not signed in.");
     res.render(path.join(__dirname, "views", "sign-in.pug"), {
       title: "Sign In | Live Stream Music",
-      href: "/sign-in.html",
+      broadcastLink: "/sign-in.html",
       status: "User: not signed in",
     });
   }
