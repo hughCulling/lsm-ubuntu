@@ -166,7 +166,7 @@ function decideBroadcastLink(req) {
   // Checks whether a session exists, meaning they would've signed in.
   if (req.session.user) {
     console.log("decideBroadcastLink() They are signed in.");
-    console.log(`req.session.user = ${req.session.user}`);
+    console.log(`req.session.user = ${JSON.stringify(req.session.user)}`);
     return "/" + req.session.user._id;
   } else {
     console.log("decideBroadcastLink() They are not signed in.");
@@ -178,7 +178,7 @@ function decideBroadcastLink(req) {
 function getStatusMessage(req) {
   if (req.session.user) {
     console.log("getStatusMessage() They are signed in.");
-    console.log(`req.session.user = ${req.session.user}`);
+    console.log(`req.session.user = ${JSON.stringify(req.session.user)}`);
     return `Signed in as: ${req.session.user.name}`;
   } else {
     console.log("getStatusMessage() They are not signed in.");
