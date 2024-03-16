@@ -167,7 +167,7 @@ function decideBroadcastLink(req) {
   if (req.session.user) {
     console.log("decideBroadcastLink() They are signed in.");
     console.log(`req.session.user = ${JSON.stringify(req.session.user)}`);
-    return "/" + req.session.user._id;
+    return { broadcastLink: `/${req.session.user._id}` };
   } else {
     console.log("decideBroadcastLink() They are not signed in.");
     return "/sign-in.html";
@@ -187,7 +187,7 @@ function getStatusMessage(req) {
 }
 
 app.get("/", (req, res) => {
-  let idPage = decideBroadcastLink(req);
+  let idPage = decideBroadcastLink(req).broadcastLink;
   console.log(`idPage = ${idPage}`);
   let statusMessage = getStatusMessage(req);
   console.log(`statusMessage = ${statusMessage}`);
