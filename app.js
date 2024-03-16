@@ -179,7 +179,7 @@ function decideBroadcastLink(req) {
 
 app.get("/", (req, res) => {
   let idPage = decideBroadcastLink(req);
-  console.log(`idPage = ${idPage}`);
+  console.log(`idPage = ${JSON.stringify(idPage)}`);
 
   res.render(path.join(__dirname, "views", "index.pug"), {
     title: "Live Stream Music",
