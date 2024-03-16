@@ -162,14 +162,14 @@ app.use(
 );
 
 // Returns respective 'broadcastLink' based on whether user is signed in.
-function getIdPage(req) {
+function decideBroadcastLink(req) {
   // Checks whether a session exists, meaning they would've signed in.
   if (req.session.user) {
-    console.log("getIdPage() They are signed in.");
+    console.log("decideBroadcastLink() They are signed in.");
     console.log(`req.session.user = ${req.session.user}`);
     return "/" + req.session.user._id;
   } else {
-    console.log("getIdPage() They are not signed in.");
+    console.log("decideBroadcastLink() They are not signed in.");
     return "/sign-in.html";
   }
 }
@@ -187,7 +187,7 @@ function getStatusMessage(req) {
 }
 
 app.get("/", (req, res) => {
-  let idPage = getIdPage(req);
+  let idPage = decideBroadcastLink(req);
   console.log(`idPage = ${idPage}`);
   let statusMessage = getStatusMessage(req);
   console.log(`statusMessage = ${statusMessage}`);
