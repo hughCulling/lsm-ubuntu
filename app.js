@@ -187,14 +187,14 @@ function getStatusMessage(req) {
 }
 
 app.get("/", (req, res) => {
-  let idPage = decideBroadcastLink(req).broadcastLink;
+  let idPage = decideBroadcastLink(req);
   console.log(`idPage = ${idPage}`);
   let statusMessage = getStatusMessage(req);
   console.log(`statusMessage = ${statusMessage}`);
 
   res.render(path.join(__dirname, "views", "index.pug"), {
     title: "Live Stream Music",
-    broadcastLink: `${idPage}`,
+    broadcastLink: `${idPage[0]}`,
     status: `${statusMessage}`,
   });
 });
